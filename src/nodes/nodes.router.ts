@@ -11,13 +11,15 @@ class NodesRouter extends BaseRouter {
 
     public register(req: Request, res: Response): void {
         res.json({
-            message: 'success'
+            'message': 'New nodes have been added',
+            'totalNodes': [],
         });
     }
 
     public resolve(req: Request, res: Response): void {
         res.json({
-            message: 'success'
+            'message': 'Our chain is authoritative',
+            'chain': []
         });
     }
 

@@ -10,8 +10,12 @@ class MineRouter extends BaseRouter {
     }
 
     public mine(req: Request, res: Response): void {
-        res.json({
-            message: 'success'
+        res.status(200).json({
+            'message': 'New Block Forged!',
+            'index': -1,
+            'transactions': null,
+            'proof': '',
+            'previousHash': '',
         });
     }
 

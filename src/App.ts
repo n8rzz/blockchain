@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as morgan from 'morgan';
+// import * as morgan from 'morgan';
 import ChainRouter from './chain/chain.router';
 import MineRouter from './mine/mine.router';
 import NodesRouter from './nodes/nodes.router';
@@ -18,7 +18,7 @@ class App {
     }
 
     private _createMiddleware(): void {
-        this.express.use(morgan('tiny'));
+        // this.express.use(morgan('tiny'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
     }

@@ -11,7 +11,8 @@ class ChainRouter extends BaseRouter {
 
     public chain(req: Request, res: Response): void {
         res.json({
-            message: 'success'
+            'chain': null,
+            'length': -1,
         });
     }
 
