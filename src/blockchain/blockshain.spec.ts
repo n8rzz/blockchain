@@ -50,4 +50,10 @@ describe('Blockchain', () => {
         // });
     });
 
+    describe('.hash()', () => {
+        it('sorts object keys', () => {
+            blockchain.hashBlock(blockchain.lastBlock);
+        });
+    });
+
 });

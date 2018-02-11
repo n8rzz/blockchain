@@ -1,6 +1,6 @@
+import * as _ from 'lodash';
 import { IBlock } from './i-block';
 import { ITransaction } from './i-transaction';
-
 
 class Blockchain {
 
@@ -32,7 +32,11 @@ class Blockchain {
         this.createBlock(100, '1');
     }
 
-    // public hashBlock(block: IBlock): void {}
+    public hashBlock(block: IBlock): void {
+        const blockToHashWithSortedKeys: IBlock = this._sortBlockKeys(block);
+
+
+    }
 
     // public isValidProof(lastProof: any, proof: any, lastHash: any): void {}
 
@@ -82,6 +86,10 @@ class Blockchain {
         this.currentTransactions.push(transaction);
 
         return this.blockTransactionsLength;
+    }
+
+    private _sortBlockKeys(block: IBlock): IBlock {
+        return _.fromPairs(_.toPairs(block).sort()) as IBlock;
     }
 }
 
