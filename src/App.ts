@@ -20,7 +20,38 @@ class App {
     private _mountRoutes(): void {
         const router = express.Router();
 
-        router.get('/v1/api', (req: any, res: any): void => {
+        // TODO: move to route handler files
+        router.get('/v1/api/mine/', (req: express.Request, res: express.Response): void => {
+            res.json({
+                message: 'success'
+            });
+        });
+
+        router.get('/v1/api/mine/', (req: express.Request, res: express.Response): void => {
+            res.json({
+                message: 'success'
+            });
+        });
+
+        router.get('/v1/api/transactions/new', (req: express.Request, res: express.Response): void => {
+            res.json({
+                message: 'success'
+            });
+        });
+
+        router.get('/v1/api/chain', (req: express.Request, res: express.Response): void => {
+            res.json({
+                message: 'success'
+            });
+        });
+
+        router.get('/v1/api/nodes/register', (req: express.Request, res: express.Response): void => {
+            res.json({
+                message: 'success'
+            });
+        });
+
+        router.get('/v1/api/nodes/resolve', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });

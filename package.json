@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist",
-    "test": "mocha --reporter list --require ts-node/register 'src/**/*.spec.ts'",
+    "test": "mocha --reporter list --require ts-node/register 'src/**/*.spec.ts' --exit",
     "prebuild": "rm -rf dist; mkdir -p dist"
   },
   "author": "",
