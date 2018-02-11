@@ -1,5 +1,9 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import ChainRouter from './chain/chain.router';
+import MineRouter from './mine/mine.router';
+import NodesRouter from './nodes/nodes.router';
+import TransactionsRouter from './transactions/transactions.router';
 
 class App {
 
@@ -18,46 +22,10 @@ class App {
     }
 
     private _mountRoutes(): void {
-        const router = express.Router();
-
-        // TODO: move to route handler files
-        router.get('/api/v1/mine/', (req: express.Request, res: express.Response): void => {
-            res.json({
-                message: 'success'
-            });
-        });
-
-        router.get('/api/v1/mine/', (req: express.Request, res: express.Response): void => {
-            res.json({
-                message: 'success'
-            });
-        });
-
-        router.get('/api/v1/transactions/new', (req: express.Request, res: express.Response): void => {
-            res.json({
-                message: 'success'
-            });
-        });
-
-        router.get('/api/v1/chain', (req: express.Request, res: express.Response): void => {
-            res.json({
-                message: 'success'
-            });
-        });
-
-        router.get('/api/v1/nodes/register', (req: express.Request, res: express.Response): void => {
-            res.json({
-                message: 'success'
-            });
-        });
-
-        router.get('/api/v1/nodes/resolve', (req: express.Request, res: express.Response): void => {
-            res.json({
-                message: 'success'
-            });
-        });
-
-        this.express.use('/', router);
+        this.express.use('/api/v1/chain', ChainRouter);
+        this.express.use('/api/v1/mine', MineRouter);
+        this.express.use('/api/v1/nodes', NodesRouter);
+        this.express.use('/api/v1/transactions', TransactionsRouter);
     }
 
 }

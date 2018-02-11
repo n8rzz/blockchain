@@ -15,9 +15,9 @@ describe('/api/v1/mine', () => {
     });
 });
 
-describe('/api/v1/transactions/new', () => {
+describe('/api/v1/transactions/create', () => {
     it('should respond', () => {
-        return chai.request(app).get('/api/v1/transactions/new')
+        return chai.request(app).get('/api/v1/transactions/create')
             .then((res) => {
                 expect(res.type).to.eql('application/json');
             });
