@@ -1,47 +1,88 @@
+import { IBlock } from './i-block';
+import { ITransaction } from './i-transaction';
+
+
 class Blockchain {
 
-    private currentTransactions: any[] = [];
-    private chain: any[] = [];
-    private nodes: any[] = [];
+    public currentTransactions: ITransaction[] = [];
+    public chain: IBlock[] = [];
+    // private nodes: any[] = [];
 
-    get lastBlock(): void {
-        return null;
+    get lastBlock(): IBlock {
+        return this.chain[this.lastBlockIndex];
+    }
+
+    get lastBlockIndex(): number {
+        return this.chain.length - 1;
+    }
+
+    get lastTransaction(): ITransaction {
+        return this.currentTransactions[this.lastTransactionIndex];
+    }
+
+    get lastTransactionIndex(): number {
+        return this.blockTransactionsLength - 1;
+    }
+
+    get blockTransactionsLength(): number {
+        return this.currentTransactions.length;
     }
 
     constructor() {
-
+        this.createBlock(100, '1');
     }
 
-    public static hashBlock(block: any): void {}
+    // public hashBlock(block: IBlock): void {}
 
-    public static isValidProof(lastProof: any, proof: any, lastHash: any): void {}
+    // public isValidProof(lastProof: any, proof: any, lastHash: any): void {}
 
-    public registerNode(): void {}
+    // public registerNode(): void {}
 
-    public isChainValid(): boolean {
-        return false;
-    }
+    // public isChainValid(): boolean {
+    //     return false;
+    // }
 
-    public resolveConflicts(): void {}
+    public createBlock(proof: number, previousHash: string): IBlock {
+        const nextBlock: IBlock = {
+            index: this.blockTransactionsLength + 1,
+            timestamp: new Date().getTime(),
+            transactions: [
+                ...this.currentTransactions
+            ],
+            proof,
+            previousHash,
+        };
 
-    public createBlock(): void {}
-
-    public createTransaction(): void {}
-
-    public proofOfWork(lastBlock: any): void {}
-
-    public destroy(): this {
-        return this._destroy();
-    }
-
-    private _destroy(): this {
         this.currentTransactions = [];
-        this.chain = [];
-        this.nodes = [];
 
-        return this;
+        this._addBlockToChain(nextBlock);
+
+        return nextBlock;
     }
 
+    public createTransaction(from: string, to: string, qty: number): number {
+        const nextTransaction: ITransaction = {
+            from,
+            to,
+            qty,
+        };
+
+        return this._addTransactionToBlock(nextTransaction);
+    }
+
+    // public resolveConflicts(): void {}
+
+    // public proofOfWork(lastBlock: IBlock): void {}
+
+    private _addBlockToChain(block: IBlock): void {
+        this.chain.push(block);
+    }
+
+    private _addTransactionToBlock(transaction: ITransaction): number {
+        this.currentTransactions.push(transaction);
+
+        return this.blockTransactionsLength;
+    }
 }
 
-export default new Blockchain();
+export default Blockchain;
