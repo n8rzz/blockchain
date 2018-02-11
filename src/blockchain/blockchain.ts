@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as hasha from 'hasha';
 import { IBlock } from './i-block';
 import { ITransaction } from './i-transaction';
 
@@ -32,10 +33,11 @@ class Blockchain {
         this.createBlock(100, '1');
     }
 
-    public hashBlock(block: IBlock): void {
-        const blockToHashWithSortedKeys: IBlock = this._sortBlockKeys(block);
+    public hashBlock(block: IBlock): string {
+        const blockWithSortedKeys: IBlock = this._sortBlockKeys(block);
+        const blockString: string = JSON.stringify(blockWithSortedKeys);
 
-
+        return hasha(blockString);
     }
 
     // public isValidProof(lastProof: any, proof: any, lastHash: any): void {}

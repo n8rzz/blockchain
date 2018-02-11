@@ -51,8 +51,10 @@ describe('Blockchain', () => {
     });
 
     describe('.hash()', () => {
-        it('sorts object keys', () => {
-            blockchain.hashBlock(blockchain.lastBlock);
+        it('returns a string', () => {
+            const result = blockchain.hashBlock(blockchain.lastBlock);
+
+            expect(typeof result).to.eql('string');
         });
     });
 
