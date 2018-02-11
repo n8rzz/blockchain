@@ -5,7 +5,7 @@ import { ITransaction } from './i-transaction';
 
 class Blockchain {
 
-    public currentTransactions: ITransaction[] = [];
+    public blockTransactions: ITransaction[] = [];
     public chain: IBlock[] = [];
     // private nodes: any[] = [];
 
@@ -18,7 +18,7 @@ class Blockchain {
     }
 
     get lastTransaction(): ITransaction {
-        return this.currentTransactions[this.lastTransactionIndex];
+        return this.blockTransactions[this.lastTransactionIndex];
     }
 
     get lastTransactionIndex(): number {
@@ -26,7 +26,7 @@ class Blockchain {
     }
 
     get blockTransactionsLength(): number {
-        return this.currentTransactions.length;
+        return this.blockTransactions.length;
     }
 
     constructor() {
@@ -37,10 +37,16 @@ class Blockchain {
         const blockWithSortedKeys: IBlock = this._sortBlockKeys(block);
         const blockString: string = JSON.stringify(blockWithSortedKeys);
 
-        return hasha(blockString);
+        return this.createHashFromString(blockString);
     }
 
-    // public isValidProof(lastProof: any, proof: any, lastHash: any): void {}
+    public isValidProof(lastProof: number, proof: number): boolean {
+        const guess: string = `${lastProof}${proof}`;
+        const guessHash = this.createHashFromString(guess);
+        const proofValidatorCharacters: string = guessHash.slice(-4);
+
+        return proofValidatorCharacters === '0000';
+    }
 
     // public registerNode(): void {}
 
@@ -53,15 +59,14 @@ class Blockchain {
             index: this.blockTransactionsLength + 1,
             timestamp: new Date().getTime(),
             transactions: [
-                ...this.currentTransactions
+                ...this.blockTransactions
             ],
             proof,
             previousHash,
         };
 
-        this.currentTransactions = [];
-
         this._addBlockToChain(nextBlock);
+        this.blockTransactions = [];
 
         return nextBlock;
     }
@@ -76,18 +81,30 @@ class Blockchain {
         return this._addTransactionToBlock(nextTransaction);
     }
 
+    public createHashFromString(item: string): string {
+        return hasha(item);
+    }
+
     // public resolveConflicts(): void {}
 
-    // public proofOfWork(lastBlock: IBlock): void {}
+    public findProofOfWork(lastProof: number): number {
+        let proof: number = 0;
+
+        while (!this.isValidProof(lastProof, proof)) {
+            proof += 1;
+        }
+
+        return proof;
+    }
 
     private _addBlockToChain(block: IBlock): void {
         this.chain.push(block);
     }
 
     private _addTransactionToBlock(transaction: ITransaction): number {
-        this.currentTransactions.push(transaction);
+        this.blockTransactions.push(transaction);
 
-        return this.blockTransactionsLength;
+        return this.blockTransactions.length;
     }
 
     private _sortBlockKeys(block: IBlock): IBlock {

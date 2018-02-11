@@ -1,5 +1,6 @@
 import * as mocha from 'mocha';
 import { expect } from 'chai';
+import * as sinon from 'sinon';
 import Blockchain from './blockchain';
 import { ITransaction } from './i-transaction';
 
@@ -37,20 +38,18 @@ describe('Blockchain', () => {
             expect(blockchain.lastTransaction).to.eql(mockTansaction);
         });
 
-        // it('returns the index of transaction', () => {
-        //     blockchain.createTransaction(
-        //         mockTansaction.from,
-        //         mockTansaction.to,
-        //         mockTansaction.qty,
-        //     );
+        it('returns the index of transaction', () => {
+            const index: number = blockchain.createTransaction(
+                mockTansaction.from,
+                mockTansaction.to,
+                mockTansaction.qty,
+            );
 
-        //     console.log('+-+', blockchain);
-
-        //     expect(blockchain.currentTransactions[blockchain.length]).to.eql(mockTansaction);
-        // });
+            expect(index).to.eq(blockchain.blockTransactionsLength);
+        });
     });
 
-    describe('.hash()', () => {
+    describe('.hashBlock()', () => {
         it('returns a string', () => {
             const result = blockchain.hashBlock(blockchain.lastBlock);
 
@@ -58,4 +57,25 @@ describe('Blockchain', () => {
         });
     });
 
+    describe('.isValidProof()', () => {
+        beforeEach(() => {
+            blockchain.hashBlock(blockchain.lastBlock);
+        });
+
+        it('returns false when a hash does not end with `0000`', () => {
+            const lastProofMock = 12345;
+            const proofMock = 67890;
+            const createHashFromStringStub: sinon.SinonStub = sinon.stub(blockchain, 'createHashFromString').returns('1234567891234');
+
+            expect(blockchain.isValidProof(lastProofMock, proofMock)).to.eq(false);
+        });
+
+        it('returns true when a hash ends with `0000`', () => {
+            const lastProofMock = 12345;
+            const proofMock = 67890;
+            const createHashFromStringStub: sinon.SinonStub = sinon.stub(blockchain, 'createHashFromString').returns('1234567890000');
+
+            expect(blockchain.isValidProof(lastProofMock, proofMock)).to.eq(true);
+        });
+    });
 });
