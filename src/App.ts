@@ -21,37 +21,37 @@ class App {
         const router = express.Router();
 
         // TODO: move to route handler files
-        router.get('/v1/api/mine/', (req: express.Request, res: express.Response): void => {
+        router.get('/api/v1/mine/', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });
         });
 
-        router.get('/v1/api/mine/', (req: express.Request, res: express.Response): void => {
+        router.get('/api/v1/mine/', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });
         });
 
-        router.get('/v1/api/transactions/new', (req: express.Request, res: express.Response): void => {
+        router.get('/api/v1/transactions/new', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });
         });
 
-        router.get('/v1/api/chain', (req: express.Request, res: express.Response): void => {
+        router.get('/api/v1/chain', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });
         });
 
-        router.get('/v1/api/nodes/register', (req: express.Request, res: express.Response): void => {
+        router.get('/api/v1/nodes/register', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });
         });
 
-        router.get('/v1/api/nodes/resolve', (req: express.Request, res: express.Response): void => {
+        router.get('/api/v1/nodes/resolve', (req: express.Request, res: express.Response): void => {
             res.json({
                 message: 'success'
             });
