@@ -48,11 +48,6 @@ class Blockchain {
         return proofValidatorCharacters === '0000';
     }
 
-    // public registerNode(): void {}
-
-    // public isChainValid(): boolean {
-    //     return false;
-    // }
 
     public createBlock(proof: number, previousHash: string): IBlock {
         const nextBlock: IBlock = {
@@ -85,7 +80,6 @@ class Blockchain {
         return hasha(item);
     }
 
-    // public resolveConflicts(): void {}
 
     public findProofOfWork(lastProof: number): number {
         let proof: number = 0;
@@ -96,6 +90,14 @@ class Blockchain {
 
         return proof;
     }
+
+    // public registerNode(): void {}
+
+    // public resolveConflicts(): void {}
+
+    // public isChainValid(): boolean {
+    //     return false;
+    // }
 
     private _addBlockToChain(block: IBlock): void {
         this.chain.push(block);
