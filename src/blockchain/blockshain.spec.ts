@@ -1,23 +1,17 @@
 import * as mocha from 'mocha';
-import { expect } from 'chai';
 import * as sinon from 'sinon';
+import { expect } from 'chai';
 import Blockchain from './blockchain';
 import { ITransaction } from './i-transaction';
 
 describe('Blockchain', () => {
-    let blockchain: Blockchain = null;
-
-    beforeEach(() => {
-        blockchain = new Blockchain();
-    });
-
     afterEach(() => {
-        blockchain = null;
+        Blockchain.reset();
     });
 
     describe('genesis block', () => {
         it('is created on instantiation', () => {
-            expect(blockchain.chain.length).to.eql(1);
+            expect(Blockchain.length).to.eql(1);
         });
     });
 
@@ -29,29 +23,29 @@ describe('Blockchain', () => {
         };
 
         it('adds a transaction to #currentTransactions', () => {
-            blockchain.createTransaction(
+            Blockchain.createTransaction(
                 mockTansaction.from,
                 mockTansaction.to,
                 mockTansaction.qty,
             );
 
-            expect(blockchain.lastTransaction).to.eql(mockTansaction);
+            expect(Blockchain.lastTransaction).to.eql(mockTansaction);
         });
 
         it('returns the index of transaction', () => {
-            const index: number = blockchain.createTransaction(
+            const index: number = Blockchain.createTransaction(
                 mockTansaction.from,
                 mockTansaction.to,
                 mockTansaction.qty,
             );
 
-            expect(index).to.eq(blockchain.blockTransactionsLength);
+            expect(index).to.eq(Blockchain.blockTransactionsLength);
         });
     });
 
     describe('.hashBlock()', () => {
         it('returns a string', () => {
-            const result = blockchain.hashBlock(blockchain.lastBlock);
+            const result = Blockchain.hashBlock(Blockchain.lastBlock);
 
             expect(typeof result).to.eql('string');
         });
@@ -59,23 +53,27 @@ describe('Blockchain', () => {
 
     describe('.isValidProof()', () => {
         beforeEach(() => {
-            blockchain.hashBlock(blockchain.lastBlock);
+            Blockchain.hashBlock(Blockchain.lastBlock);
         });
 
         it('returns false when a hash does not end with `0000`', () => {
             const lastProofMock = 12345;
             const proofMock = 67890;
-            const createHashFromStringStub: sinon.SinonStub = sinon.stub(blockchain, 'createHashFromString').returns('1234567891234');
+            const createHashFromStringStub: sinon.SinonStub = sinon.stub(Blockchain, 'createHashFromString').returns('1234567891234');
 
-            expect(blockchain.isValidProof(lastProofMock, proofMock)).to.eq(false);
+            expect(Blockchain.isValidProof(lastProofMock, proofMock)).to.eq(false);
+
+            createHashFromStringStub.restore();
         });
 
         it('returns true when a hash ends with `0000`', () => {
             const lastProofMock = 12345;
             const proofMock = 67890;
-            const createHashFromStringStub: sinon.SinonStub = sinon.stub(blockchain, 'createHashFromString').returns('1234567890000');
+            const createHashFromStringStub: sinon.SinonStub = sinon.stub(Blockchain, 'createHashFromString').returns('1234567890000');
 
-            expect(blockchain.isValidProof(lastProofMock, proofMock)).to.eq(true);
+            expect(Blockchain.isValidProof(lastProofMock, proofMock)).to.eq(true);
+
+            createHashFromStringStub.restore();
         });
     });
 });

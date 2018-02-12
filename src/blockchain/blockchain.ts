@@ -7,7 +7,11 @@ class Blockchain {
 
     public blockTransactions: ITransaction[] = [];
     public chain: IBlock[] = [];
-    // private nodes: any[] = [];
+    private nodes: any[] = [];
+
+    get length(): number {
+        return this.chain.length;
+    }
 
     get lastBlock(): IBlock {
         return this.chain[this.lastBlockIndex];
@@ -30,24 +34,8 @@ class Blockchain {
     }
 
     constructor() {
-        this.createBlock(100, '1');
+        this.init();
     }
-
-    public hashBlock(block: IBlock): string {
-        const blockWithSortedKeys: IBlock = this._sortBlockKeys(block);
-        const blockString: string = JSON.stringify(blockWithSortedKeys);
-
-        return this.createHashFromString(blockString);
-    }
-
-    public isValidProof(lastProof: number, proof: number): boolean {
-        const guess: string = `${lastProof}${proof}`;
-        const guessHash = this.createHashFromString(guess);
-        const proofValidatorCharacters: string = guessHash.slice(-4);
-
-        return proofValidatorCharacters === '0000';
-    }
-
 
     public createBlock(proof: number, previousHash: string): IBlock {
         const nextBlock: IBlock = {
@@ -91,7 +79,32 @@ class Blockchain {
         return proof;
     }
 
+    public hashBlock(block: IBlock): string {
+        const blockWithSortedKeys: IBlock = this._sortBlockKeys(block);
+        const blockString: string = JSON.stringify(blockWithSortedKeys);
+
+        return this.createHashFromString(blockString);
+    }
+
+    public init(): void {
+        this.createBlock(100, '1');
+    }
+
+    public isValidProof(lastProof: number, proof: number): boolean {
+        const guess: string = `${lastProof}${proof}`;
+        const guessHash = this.createHashFromString(guess);
+        const proofValidatorCharacters: string = guessHash.slice(-4);
+
+        return proofValidatorCharacters === '0000';
+    }
+
     // public registerNode(): void {}
+
+    public reset(): void {
+        this.blockTransactions = [];
+        this.chain = [];
+        this.nodes = [];
+    }
 
     // public resolveConflicts(): void {}
 
@@ -114,4 +127,4 @@ class Blockchain {
     }
 }
 
-export default Blockchain;
+export default new Blockchain();
