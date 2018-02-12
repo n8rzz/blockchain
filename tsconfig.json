@@ -12,7 +12,7 @@
       "noImplicitThis": true,
       "strictNullChecks": false,
       "noImplicitReturns": true,
-      "noUnusedLocals": true,
+      "noUnusedLocals": false,
       "allowSyntheticDefaultImports": true,
       "forceConsistentCasingInFileNames": true,
       "typeRoots": [

@@ -23,14 +23,38 @@ describe('/api/v1/mine', () => {
 });
 
 describe('/api/v1/transactions/create', () => {
-    it('should respond', () => {
-        return chai.request(app).get('/api/v1/transactions/create')
-            .then((res) => {
-                expect(res.status).to.eql(200);
-                expect(res.body).to.have.all.keys([
-                    'message',
-                ]);
+    it('should return 400 when passed invalid params', () => {
+        const mockInvalidTransaction: object = {
+            to: "tom",
+            from: "callahan"
+        };
+
+        return chai.request(app).post('/api/v1/transactions/create')
+            .send(mockInvalidTransaction)
+            .catch((err) => {
+                expect(err.status).to.eql(400);
+                // expect(err.req.body).to.eql({
+                //     message: 'Invalid parameters passed to `/transactions/create`.',
+                //     status: 400,
+                // });
             });
+    });
+
+    it('should return 201 when passed valid params', () => {
+        const mockValidTransaction: object = {
+            to: "tom",
+            from: "richard",
+            qty: 3
+        };
+
+        return chai.request(app).post('/api/v1/transactions/create')
+            .send(mockValidTransaction)
+            .then((res) => {
+                expect(res.status).to.eql(201);
+                expect(res.body).to.eql({
+                    message: 'Success! Transaction will be added to Block 1'
+                });
+            })
     });
 });
 

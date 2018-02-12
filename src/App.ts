@@ -19,7 +19,7 @@ class App {
 
     private _createMiddleware(): void {
         if (process.env.NODE_ENV !== 'test') {
-            this.express.use(morgan('tiny'));
+            this.express.use(morgan('common'));
         }
 
         this.express.use(bodyParser.json());
