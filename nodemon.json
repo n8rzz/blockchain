@@ -1,0 +1,16 @@
+{
+    "delay": "1000ms",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "ignore": [
+        ".git",
+        "*.spec.ts",
+        "node_modules/*"
+    ],
+    "restartable": "rs",
+    "verbose": true,
+    "watch": [
+        "dist/"
+    ]
+}
