@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import BaseRouter from '../base.router';
+import Blockchain from '../blockchain/blockchain';
 
 class ChainRouter extends BaseRouter {
 
@@ -11,8 +12,8 @@ class ChainRouter extends BaseRouter {
 
     public chain(req: Request, res: Response): void {
         res.json({
-            'chain': null,
-            'length': -1,
+            'chain': Blockchain.chain,
+            'length': Blockchain.length,
         });
     }
 
