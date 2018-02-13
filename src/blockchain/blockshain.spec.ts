@@ -11,7 +11,7 @@ describe('Blockchain', () => {
 
     describe('genesis block', () => {
         it('is created on instantiation', () => {
-            expect(Blockchain.length).to.eql(1);
+            expect(Blockchain.length).to.eql(2);
         });
     });
 

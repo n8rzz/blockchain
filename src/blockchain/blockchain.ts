@@ -39,7 +39,7 @@ class Blockchain {
 
     public createBlock(proof: number, previousHash: string): IBlock {
         const nextBlock: IBlock = {
-            index: this.blockTransactionsLength + 1,
+            index: this.length + 1,
             timestamp: new Date().getTime(),
             transactions: [
                 ...this.blockTransactions
