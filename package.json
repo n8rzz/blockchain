@@ -5,12 +5,33 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "coverage": "NODE_ENV=test nyc npm t",
     "start": "nodemon ./dist --config nodemon.json",
-    "test": "NODE_ENV=test mocha --reporter list --require ts-node/register 'src/**/*.spec.ts' --exit",
+    "test": "NODE_ENV=test mocha --require ts-node/register 'src/**/*.spec.ts' --exit",
     "prebuild": "rm -rf dist; mkdir -p dist"
   },
   "author": "",
   "license": "ISC",
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "typings"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "all": true
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
@@ -34,9 +55,11 @@
     "@types/uuid": "^3.4.3",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "istanbul": "^0.4.5",
     "lodash": "^4.17.5",
     "mocha": "^5.0.0",
     "nodemon": "^1.14.12",
+    "nyc": "^11.4.1",
     "ts-node": "^4.1.0"
   }
 }

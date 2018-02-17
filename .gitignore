@@ -78,6 +78,7 @@ atom/storage
 !atom/.apm/package-sync
 !atom/packages/package-sync
 
-
+.nyc_output
+coverage/
 node_modules/
 dist/
