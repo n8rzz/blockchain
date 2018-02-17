@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Blockchain from '../blockchain/blockchain';
 import { ITransaction } from '../blockchain/i-transaction';
-import BaseRouter from '../base.router';
+import BaseRouter from '../base/base.router';
 
 interface ITransactionRequest extends Request {
     to: string,
@@ -9,13 +9,13 @@ interface ITransactionRequest extends Request {
     qty: number,
 }
 
-function _areTransactionParamsValid(to: string, from: string, qty: number): boolean {
+function _hasValidTransactionParams(to: string, from: string, qty: number): boolean {
     return typeof to === 'string' &&
         typeof from === 'string' &&
         typeof qty === 'number';
 }
 
-class TransactionsRouter extends BaseRouter {
+class TransactionRouter extends BaseRouter {
 
     constructor() {
         super();
@@ -23,10 +23,15 @@ class TransactionsRouter extends BaseRouter {
         return this._createHandlers();
     }
 
+    /**
+     *
+     * @param req ITransactionRequest
+     * @param res Response
+     */
     private _create(req: ITransactionRequest, res: Response): void {
         const { to, from, qty } = req.body;
 
-        if (!_areTransactionParamsValid(to, from, qty)) {
+        if (!_hasValidTransactionParams(to, from, qty)) {
             res.status(400).json({
                 message: 'Invalid parameters passed to `/transactions/create`.',
                 status: 400,
@@ -50,4 +55,4 @@ class TransactionsRouter extends BaseRouter {
 
 }
 
-export default new TransactionsRouter().router;
+export default new TransactionRouter().router;

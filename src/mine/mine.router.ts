@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import BaseRouter from '../base.router';
+import BaseRouter from '../base/base.router';
 import Blockchain from '../blockchain/blockchain';
 import { IBlock } from '../blockchain/i-block';
 

@@ -3,8 +3,8 @@ import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import ChainRouter from './chain/chain.router';
 import MineRouter from './mine/mine.router';
-import NodesRouter from './nodes/nodes.router';
-import TransactionsRouter from './transactions/transactions.router';
+import NodeRouter from './node/node.router';
+import TransactionRouter from './transaction/transaction.router';
 
 class App {
 
@@ -29,8 +29,8 @@ class App {
     private _mountRouteHandlers(): void {
         this.express.use('/api/v1/chain', ChainRouter);
         this.express.use('/api/v1/mine', MineRouter);
-        this.express.use('/api/v1/nodes', NodesRouter);
-        this.express.use('/api/v1/transactions', TransactionsRouter);
+        this.express.use('/api/v1/nodes', NodeRouter);
+        this.express.use('/api/v1/transactions', TransactionRouter);
     }
 
 }

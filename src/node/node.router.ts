@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import BaseRouter from '../base.router';
+import BaseRouter from '../base/base.router';
 
-class NodesRouter extends BaseRouter {
+class NodeRouter extends BaseRouter {
 
     constructor() {
         super();
@@ -32,4 +32,4 @@ class NodesRouter extends BaseRouter {
 
 }
 
-export default new NodesRouter().router;
+export default new NodeRouter().router;
