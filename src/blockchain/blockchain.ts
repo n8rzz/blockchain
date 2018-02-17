@@ -37,21 +37,18 @@ class Blockchain {
         this.init();
     }
 
-    public createBlock(proof: number, previousHash: string): IBlock {
-        const nextBlock: IBlock = {
-            index: this.length + 1,
-            timestamp: new Date().getTime(),
-            transactions: [
-                ...this.blockTransactions
-            ],
-            proof,
-            previousHash,
-        };
+    public init(): void {
+        this.createGenesisBlock();
+    }
 
-        this._addBlockToChain(nextBlock);
-        this.blockTransactions = [];
+    public createBlock(proof: number, previousBlock: IBlock): IBlock {
+        const previousHash: string = this.hashBlock(previousBlock);
 
-        return nextBlock;
+        return this._createBlockWitProofAndPreviousHash(proof, previousHash);
+    }
+
+    public createGenesisBlock(): void {
+        this._createBlockWitProofAndPreviousHash(100, '1');
     }
 
     public createTransaction(from: string, to: string, qty: number): number {
@@ -67,7 +64,6 @@ class Blockchain {
     public createHashFromString(item: string): string {
         return hasha(item);
     }
-
 
     public findProofOfWork(lastProof: number): number {
         let proof: number = 0;
@@ -86,16 +82,22 @@ class Blockchain {
         return this.createHashFromString(blockString);
     }
 
-    public init(): void {
-        this.createBlock(100, '1');
-    }
-
     public isValidProof(lastProof: number, proof: number): boolean {
         const guess: string = `${lastProof}${proof}`;
         const guessHash = this.createHashFromString(guess);
         const proofValidatorCharacters: string = guessHash.slice(-4);
 
         return proofValidatorCharacters === '0000';
+    }
+
+    public mineNextBlock(): IBlock {
+        const previousBlock: IBlock = this.lastBlock;
+        const lastProof: number = previousBlock.proof;
+        const foundProof: number = this.findProofOfWork(lastProof);
+
+        this.createTransaction('0', '1234', 1);
+
+        return this.createBlock(foundProof, previousBlock);
     }
 
     // public registerNode(): void {}
@@ -120,6 +122,27 @@ class Blockchain {
         this.blockTransactions.push(transaction);
 
         return this.blockTransactions.length;
+    }
+
+    private _createBlockWitProofAndPreviousHash(proof: number, previousHash: string): IBlock {
+        const nextBlock: IBlock = {
+            index: this.length + 1,
+            timestamp: new Date().getTime(),
+            transactions: [
+                ...this.blockTransactions
+            ],
+            proof,
+            previousHash,
+        };
+
+        this._addBlockToChain(nextBlock);
+        this._resetTransactionList();
+
+        return nextBlock;
+    }
+
+    private _resetTransactionList(): void {
+        this.blockTransactions = [];
     }
 
     private _sortBlockKeys(block: IBlock): IBlock {

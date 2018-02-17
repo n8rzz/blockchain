@@ -33,10 +33,6 @@ describe('/api/v1/transactions/create', () => {
             .send(mockInvalidTransaction)
             .catch((err) => {
                 expect(err.status).to.eql(400);
-                // expect(err.req.body).to.eql({
-                //     message: 'Invalid parameters passed to `/transactions/create`.',
-                //     status: 400,
-                // });
             });
     });
 

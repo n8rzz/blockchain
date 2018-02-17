@@ -3,18 +3,6 @@ import BaseRouter from '../base.router';
 import Blockchain from '../blockchain/blockchain';
 import { IBlock } from '../blockchain/i-block';
 
-function _mineNextBlock(): IBlock {
-    const previousBlock: IBlock = Blockchain.lastBlock;
-    const lastProof: number = previousBlock.proof;
-    const foundProof: number = Blockchain.findProofOfWork(lastProof);
-
-    Blockchain.createTransaction('0', '1234', 1);
-
-    const previousHash: string = Blockchain.hashBlock(previousBlock);
-
-    return Blockchain.createBlock(foundProof, previousHash);
-}
-
 class MineRouter extends BaseRouter {
 
     constructor() {
@@ -24,7 +12,7 @@ class MineRouter extends BaseRouter {
     }
 
     private _mine(req: Request, res: Response): void {
-        const nextBlock: IBlock = _mineNextBlock();
+        const nextBlock: IBlock = Blockchain.mineNextBlock();
 
         res.status(200).json({
             'index': nextBlock.index,

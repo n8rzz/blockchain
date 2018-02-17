@@ -23,12 +23,6 @@ class TransactionsRouter extends BaseRouter {
         return this._createHandlers();
     }
 
-    private _createHandlers(): this {
-        this.router.post('/create', this._create);
-
-        return this;
-    }
-
     private _create(req: ITransactionRequest, res: Response): void {
         const { to, from, qty } = req.body;
 
@@ -46,6 +40,12 @@ class TransactionsRouter extends BaseRouter {
         res.status(201).json({
             message: `Success! Transaction will be added to Block ${transactionIndex}`
         });
+    }
+
+    private _createHandlers(): this {
+        this.router.post('/create', this._create);
+
+        return this;
     }
 
 }
