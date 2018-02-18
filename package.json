@@ -7,7 +7,7 @@
     "build": "tsc",
     "coverage": "NODE_ENV=test nyc npm t",
     "start": "nodemon ./dist --config nodemon.json",
-    "test": "NODE_ENV=test mocha --require ts-node/register 'src/**/*.spec.ts' --exit",
+    "test": "NODE_ENV=test mocha --reporter list --require ts-node/register 'src/**/*.spec.ts' --exit",
     "prebuild": "rm -rf dist; mkdir -p dist"
   },
   "author": "",

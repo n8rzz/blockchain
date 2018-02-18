@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import * as uuid from 'uuid/v4';
 import BaseRouter from '../base/base.router';
 import NodeCollection from './node.collection';
 
@@ -16,9 +15,7 @@ class NodeRouter extends BaseRouter {
     }
 
     public register(req: IRegisterNodeRequest, res: Response): void {
-        const id: string = uuid();
-
-        NodeCollection.createAndAddNode(id, req.address);
+        NodeCollection.createAndAddNode(req.address);
 
         res.json({
             'message': 'New nodes have been added',

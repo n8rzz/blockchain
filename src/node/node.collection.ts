@@ -1,3 +1,4 @@
+import * as uuid from 'uuid/v4';
 import BaseCollection from '../base/base.collection';
 import { INode } from './i-node';
 
@@ -10,9 +11,9 @@ class NodeCollection extends BaseCollection<INode> {
         super.addItem(item);
     }
 
-    public createAndAddNode(id: string, address: string): void {
+    public createAndAddNode(address: string): void {
         const node: INode = {
-            id,
+            id: uuid(),
             address,
         };
 
