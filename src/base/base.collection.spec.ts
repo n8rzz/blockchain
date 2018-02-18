@@ -17,7 +17,7 @@ describe('BaseCollection', () => {
     });
 
     afterEach(() => {
-        collection = new BaseCollection<ITestModel>();
+        collection = null;
     });
 
     describe('.addItem()', () => {

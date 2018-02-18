@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
+import * as uuid from 'uuid/v4';
 import BaseRouter from '../base/base.router';
+import NodeCollection from './node.collection';
+
+interface IRegisterNodeRequest extends Request {
+    address: string;
+}
 
 class NodeRouter extends BaseRouter {
 
@@ -9,10 +15,14 @@ class NodeRouter extends BaseRouter {
         return this._createHandlers();
     }
 
-    public register(req: Request, res: Response): void {
+    public register(req: IRegisterNodeRequest, res: Response): void {
+        const id: string = uuid();
+
+        NodeCollection.createAndAddNode(id, req.address);
+
         res.json({
             'message': 'New nodes have been added',
-            'totalNodes': [],
+            'totalNodes': NodeCollection.length,
         });
     }
 
@@ -24,7 +34,7 @@ class NodeRouter extends BaseRouter {
     }
 
     private _createHandlers(): this {
-        this.router.get('/register', this.register);
+        this.router.post('/register', this.register);
         this.router.get('/resolve', this.resolve);
 
         return this;

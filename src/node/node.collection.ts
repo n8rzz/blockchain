@@ -10,7 +10,18 @@ class NodeCollection extends BaseCollection<INode> {
         super.addItem(item);
     }
 
+    public createAndAddNode(id: string, address: string): void {
+        const node: INode = {
+            id,
+            address,
+        };
+
+        this.addItem(node);
+    }
+
     public removeItem(item: INode): void {
         super.removeItem(item);
     }
 }
+
+export default new NodeCollection();
